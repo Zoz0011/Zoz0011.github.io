@@ -1,8 +1,8 @@
 CACHE MANIFEST
+# Ahmed Ragab theme v1
 
 CACHE:
-../img.jpg
-../style.css
+css/ahmed-ragab-theme.css
 goldhen_2.4b18.12.bin
 index.html
 css\lapse.js
