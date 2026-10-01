@@ -10,9 +10,14 @@ body {
     min-height: 100vh;
     margin: 0;
     overflow: hidden;
-    background:
-        radial-gradient(circle at 50% 34%, rgba(0, 132, 255, 0.24) 0, rgba(0, 65, 170, 0.08) 32%, transparent 58%),
-        linear-gradient(145deg, #020714 0%, #061839 48%, #020714 100%);
+    background-color: #020817;
+    background-image:
+        radial-gradient(circle at 50% 38%, rgba(0, 95, 220, 0.08) 0, rgba(0, 15, 48, 0.16) 45%, rgba(1, 5, 18, 0.38) 100%),
+        url('../assets/ahmed-ragab-bg-v2.png');
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 body:before,
@@ -88,22 +93,22 @@ body:after {
     -webkit-box-pack: center;
     -webkit-justify-content: center;
     justify-content: center;
-    min-height: 220px;
+    min-height: 250px;
 }
 
 .logo-wrap {
     position: relative;
-    width: 286px;
-    min-width: 286px;
-    margin-right: 48px;
+    width: 390px;
+    min-width: 390px;
+    margin-right: 30px;
 }
 
 .logo-wrap:before {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 208px;
-    height: 208px;
+    width: 270px;
+    height: 270px;
     content: "";
     border: 1px solid rgba(92, 208, 255, 0.22);
     border-radius: 50%;
@@ -112,13 +117,13 @@ body:after {
     transform: translate(-50%, -50%);
 }
 
-.ar-logo {
+.ar-controller-logo {
     position: relative;
     display: block;
     width: 100%;
     height: auto;
-    -webkit-filter: drop-shadow(0 0 12px rgba(0, 162, 255, 0.72));
-    filter: drop-shadow(0 0 12px rgba(0, 162, 255, 0.72));
+    -webkit-filter: drop-shadow(0 0 15px rgba(0, 162, 255, 0.82));
+    filter: drop-shadow(0 0 15px rgba(0, 162, 255, 0.82));
 }
 
 .brand-copy {
@@ -150,6 +155,19 @@ body:after {
     color: #b8dcf7;
     font-size: 17px;
     letter-spacing: 1px;
+}
+
+.brand-promo {
+    display: inline-block;
+    margin: 15px 0 0;
+    padding: 7px 15px;
+    border: 1px solid rgba(91, 206, 255, 0.52);
+    border-radius: 18px;
+    color: #ddf6ff;
+    background: rgba(0, 81, 174, 0.28);
+    box-shadow: 0 0 18px rgba(0, 137, 255, 0.18), inset 0 0 12px rgba(85, 209, 255, 0.08);
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .status-panel {
@@ -227,22 +245,38 @@ body:after {
 }
 
 .brand-footer {
-    margin-top: 16px;
-    color: #8cb4d2;
+    display: inline-block;
+    margin-top: 14px;
+    padding: 9px 18px;
+    border: 1px solid rgba(74, 198, 255, 0.48);
+    border-radius: 24px;
+    color: #d9f4ff;
+    background: linear-gradient(90deg, rgba(2, 25, 66, 0.88), rgba(0, 77, 168, 0.62), rgba(2, 25, 66, 0.88));
+    box-shadow: 0 0 22px rgba(0, 132, 255, 0.28), inset 0 0 16px rgba(82, 208, 255, 0.06);
     font-size: 13px;
+    direction: rtl;
+}
+
+.brand-footer .promo {
+    color: #c9ebff;
+    font-weight: bold;
 }
 
 .brand-footer .owner {
+    display: inline-block;
+    padding-right: 13px;
+    border-right: 1px solid rgba(107, 213, 255, 0.36);
     color: #ffffff;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: bold;
     direction: rtl;
 }
 
 .brand-footer .phone {
     display: inline-block;
-    margin-left: 9px;
+    margin: 0 14px;
     color: #55caff;
+    font-size: 16px;
     font-weight: bold;
     letter-spacing: 1px;
     direction: ltr;
@@ -257,42 +291,13 @@ body:after {
     margin: 28px auto 0;
 }
 
-.cache-emblem {
-    position: relative;
-    width: 142px;
-    height: 142px;
-    margin: 0 auto 15px;
-    border: 2px solid #40bdff;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 38%, #0e5fbe, #03132f 68%);
-    box-shadow: 0 0 18px rgba(52, 187, 255, 0.78), 0 0 62px rgba(0, 87, 255, 0.32), inset 0 0 28px rgba(49, 181, 255, 0.2);
-}
-
-.cache-crown {
-    position: absolute;
-    top: -25px;
-    left: 0;
-    width: 100%;
-    color: #7be0ff;
-    font-size: 44px;
-    text-shadow: 0 0 12px #078fff;
-}
-
-.cache-monogram {
-    padding-top: 36px;
-    color: #ffffff;
-    font-size: 58px;
-    font-weight: 900;
-    letter-spacing: -7px;
-    text-shadow: 0 0 12px #43c6ff;
-}
-
-.cache-monogram span {
+.cache-controller-logo {
     display: block;
-    margin-top: -2px;
-    color: #76d8ff;
-    font-size: 11px;
-    letter-spacing: 6px;
+    width: 245px;
+    height: auto;
+    margin: -27px auto -20px;
+    -webkit-filter: drop-shadow(0 0 13px rgba(0, 162, 255, 0.8));
+    filter: drop-shadow(0 0 13px rgba(0, 162, 255, 0.8));
 }
 
 .cache-title {
@@ -318,16 +323,19 @@ body:after {
 @media (max-width: 760px), (max-height: 650px) {
     body { overflow: auto; }
     .site-shell { padding: 14px 18px; }
-    .brand-lockup { min-height: 168px; }
-    .logo-wrap { width: 210px; min-width: 210px; margin-right: 24px; }
-    .logo-wrap:before { width: 154px; height: 154px; }
+    .brand-lockup { min-height: 192px; }
+    .logo-wrap { width: 285px; min-width: 285px; margin-right: 18px; }
+    .logo-wrap:before { width: 190px; height: 190px; }
     .brand-name { font-size: 46px; }
     .brand-subtitle { font-size: 14px; }
+    .brand-promo { margin-top: 10px; font-size: 12px; }
     .status-panel { min-height: 140px; padding: 18px 22px; }
     #msgs { font-size: 22px; }
     .cache-brand { margin-top: 12px; }
-    .cache-emblem { width: 104px; height: 104px; }
-    .cache-crown { top: -23px; font-size: 36px; }
-    .cache-monogram { padding-top: 28px; font-size: 43px; }
+    .cache-controller-logo { width: 190px; margin-top: -24px; margin-bottom: -20px; }
     .cache-title { font-size: 32px; }
+    .brand-footer { padding: 7px 13px; }
+    .brand-footer .promo { font-size: 11px; }
+    .brand-footer .phone { margin: 0 9px; font-size: 13px; }
+    .brand-footer .owner { font-size: 13px; }
 }
