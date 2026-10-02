@@ -1,10 +1,9 @@
 CACHE MANIFEST
-# GOOD GAME services poster v6.1
+# GOOD GAME services poster v7 - reduced cache size for PS4
 
 CACHE:
-css/ahmed-ragab-theme.css?v=6
+css/ahmed-ragab-theme.css?v=7
 assets/good-game-services-poster-v6.png
-assets/ahmed-ragab-bg-v3.png
 goldhen_2.4b18.12.bin
 index.html
 css\lapse.js
