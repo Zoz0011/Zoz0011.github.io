@@ -223,6 +223,15 @@ body:after {
     font-weight: bold;
 }
 
+.brand-address {
+    margin: 9px 0 0;
+    color: #ffffff;
+    font-size: 19px;
+    font-weight: bold;
+    direction: rtl;
+    text-shadow: 0 0 12px rgba(75, 196, 255, 0.58);
+}
+
 .status-panel {
     box-sizing: border-box;
     max-width: 1200px;
@@ -371,6 +380,15 @@ body:after {
     font-weight: bold;
     letter-spacing: 1px;
     direction: rtl;
+}
+
+.cache-address {
+    margin: 5px 0 0;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    direction: rtl;
+    text-shadow: 0 0 10px rgba(75, 196, 255, 0.5);
 }
 
 .cache-panel {
