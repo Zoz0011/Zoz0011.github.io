@@ -1,8 +1,8 @@
 CACHE MANIFEST 
-# GOOD GAME services poster v6
+# GOOD GAME services poster v6.1
 
 CACHE:
-css/ahmed-ragab-theme.css
+css/ahmed-ragab-theme.css?v=6
 assets/good-game-services-poster-v6.png
 assets/ahmed-ragab-bg-v3.png
 goldhen_2.4b18.12.bin
