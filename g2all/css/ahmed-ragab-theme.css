@@ -126,6 +126,56 @@ body:after {
     filter: drop-shadow(0 0 15px rgba(0, 162, 255, 0.82));
 }
 
+.poster-ad {
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box;
+    width: 97%;
+    margin: -31px auto 0;
+    padding: 8px 11px 9px;
+    border: 1px solid rgba(101, 218, 255, 0.66);
+    border-radius: 17px;
+    background: linear-gradient(90deg, rgba(2, 19, 53, 0.96), rgba(0, 71, 151, 0.9), rgba(2, 19, 53, 0.96));
+    box-shadow: 0 0 23px rgba(0, 143, 255, 0.42), inset 0 0 17px rgba(71, 198, 255, 0.1);
+    direction: rtl;
+}
+
+.poster-ad p {
+    margin: 0;
+    text-shadow: 0 0 10px rgba(78, 195, 255, 0.55);
+}
+
+.poster-services-primary {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.poster-services-secondary {
+    margin-top: 3px !important;
+    color: #c6ecff;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.poster-phones {
+    margin-top: 5px;
+    direction: ltr;
+}
+
+.poster-phones span {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 3px 10px;
+    border: 1px solid rgba(92, 211, 255, 0.42);
+    border-radius: 13px;
+    color: #63d2ff;
+    background: rgba(0, 19, 54, 0.68);
+    font-size: 17px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
 .brand-copy {
     max-width: 620px;
     text-align: right;
@@ -251,13 +301,13 @@ body:after {
 .brand-footer {
     display: inline-block;
     margin-top: 8px;
-    padding: 12px 28px;
+    padding: 10px 18px;
     border: 1px solid rgba(74, 198, 255, 0.48);
     border-radius: 24px;
     color: #d9f4ff;
     background: linear-gradient(90deg, rgba(2, 25, 66, 0.88), rgba(0, 77, 168, 0.62), rgba(2, 25, 66, 0.88));
     box-shadow: 0 0 22px rgba(0, 132, 255, 0.28), inset 0 0 16px rgba(82, 208, 255, 0.06);
-    font-size: 21px;
+    font-size: 16px;
     direction: rtl;
 }
 
@@ -271,16 +321,16 @@ body:after {
     padding-right: 13px;
     border-right: 1px solid rgba(107, 213, 255, 0.36);
     color: #ffffff;
-    font-size: 23px;
+    font-size: 20px;
     font-weight: bold;
     direction: rtl;
 }
 
 .brand-footer .phone {
     display: inline-block;
-    margin: 0 18px;
+    margin: 0 8px;
     color: #55caff;
-    font-size: 29px;
+    font-size: 21px;
     font-weight: bold;
     letter-spacing: 1px;
     direction: ltr;
@@ -316,9 +366,10 @@ body:after {
 .cache-subtitle {
     margin: 7px 0 0;
     color: #87cfff;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
-    letter-spacing: 4px;
+    letter-spacing: 1px;
+    direction: rtl;
 }
 
 .cache-panel {
@@ -332,6 +383,10 @@ body:after {
     .brand-lockup { min-height: 210px; }
     .logo-wrap { width: 325px; min-width: 325px; margin-right: 20px; }
     .logo-wrap:before { width: 190px; height: 190px; }
+    .poster-ad { margin-top: -23px; padding: 6px 8px 7px; }
+    .poster-services-primary { font-size: 14px; }
+    .poster-services-secondary { font-size: 12px; }
+    .poster-phones span { margin: 0 2px; padding: 2px 6px; font-size: 12px; }
     .brand-name { font-size: 56px; }
     .brand-subtitle { font-size: 18px; }
     .brand-promo { margin-top: 10px; font-size: 16px; }
