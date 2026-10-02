@@ -13,7 +13,7 @@ body {
     background-color: #020817;
     background-image:
         radial-gradient(circle at 50% 38%, rgba(0, 95, 220, 0.08) 0, rgba(0, 15, 48, 0.16) 45%, rgba(1, 5, 18, 0.38) 100%),
-        url('../assets/ahmed-ragab-bg-v2.png');
+        url('../assets/ahmed-ragab-bg-v3.png');
     background-position: center center;
     background-size: cover;
     background-attachment: fixed;
@@ -58,7 +58,7 @@ body:after {
     box-sizing: border-box;
     width: 100%;
     min-height: 100vh;
-    padding: 22px 44px 18px;
+    padding: 15px 44px 14px;
 }
 
 .topline {
@@ -70,14 +70,14 @@ body:after {
 }
 
 .hero {
-    max-width: 1080px;
+    max-width: 1180px;
     margin: 0 auto;
 }
 
 .eyebrow {
-    margin: 0 0 8px;
+    margin: 0 0 5px;
     color: #83cfff;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     letter-spacing: 5px;
     text-transform: uppercase;
@@ -93,22 +93,22 @@ body:after {
     -webkit-box-pack: center;
     -webkit-justify-content: center;
     justify-content: center;
-    min-height: 250px;
+    min-height: 276px;
 }
 
 .logo-wrap {
     position: relative;
-    width: 390px;
-    min-width: 390px;
-    margin-right: 30px;
+    width: 460px;
+    min-width: 460px;
+    margin-right: 38px;
 }
 
 .logo-wrap:before {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 270px;
-    height: 270px;
+    width: 310px;
+    height: 310px;
     content: "";
     border: 1px solid rgba(92, 208, 255, 0.22);
     border-radius: 50%;
@@ -127,7 +127,7 @@ body:after {
 }
 
 .brand-copy {
-    max-width: 500px;
+    max-width: 570px;
     text-align: right;
     direction: rtl;
 }
@@ -135,7 +135,7 @@ body:after {
 .brand-kicker {
     margin: 0 0 4px;
     color: #52beff;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bold;
     letter-spacing: 3px;
     direction: ltr;
@@ -144,38 +144,39 @@ body:after {
 .brand-name {
     margin: 0;
     color: #ffffff;
-    font-size: 66px;
+    font-size: 86px;
     font-weight: 800;
     line-height: 1.05;
     text-shadow: 0 0 12px rgba(76, 194, 255, 0.8), 0 0 32px rgba(0, 91, 255, 0.46);
 }
 
 .brand-subtitle {
-    margin: 10px 0 0;
+    margin: 12px 0 0;
     color: #b8dcf7;
-    font-size: 17px;
+    font-size: 23px;
+    font-weight: bold;
     letter-spacing: 1px;
 }
 
 .brand-promo {
     display: inline-block;
     margin: 15px 0 0;
-    padding: 7px 15px;
+    padding: 9px 20px;
     border: 1px solid rgba(91, 206, 255, 0.52);
     border-radius: 18px;
     color: #ddf6ff;
     background: rgba(0, 81, 174, 0.28);
     box-shadow: 0 0 18px rgba(0, 137, 255, 0.18), inset 0 0 12px rgba(85, 209, 255, 0.08);
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
 }
 
 .status-panel {
     box-sizing: border-box;
-    max-width: 990px;
-    min-height: 168px;
-    margin: 12px auto 0;
-    padding: 23px 34px 20px;
+    max-width: 1120px;
+    min-height: 178px;
+    margin: 6px auto 0;
+    padding: 19px 34px 18px;
     border: 1px solid rgba(80, 192, 255, 0.36);
     border-radius: 18px;
     background: linear-gradient(135deg, rgba(6, 30, 70, 0.9), rgba(3, 13, 34, 0.88));
@@ -185,17 +186,17 @@ body:after {
 .status-label {
     margin: 0 0 11px;
     color: #58c2ff;
-    font-size: 11px;
+    font-size: 14px;
     font-weight: bold;
     letter-spacing: 4px;
     text-transform: uppercase;
 }
 
 #msgs {
-    min-height: 38px;
+    min-height: 48px;
     margin: 0;
     color: #ffffff;
-    font-size: 27px;
+    font-size: 36px;
     font-weight: 600;
     line-height: 1.35;
     text-shadow: 0 0 18px rgba(68, 182, 255, 0.46);
@@ -205,7 +206,7 @@ body:after {
     position: relative;
     width: 76%;
     height: 3px;
-    margin: 21px auto 17px;
+    margin: 17px auto 14px;
     overflow: hidden;
     border-radius: 5px;
     background: rgba(50, 147, 255, 0.18);
@@ -235,25 +236,26 @@ body:after {
 .system-badges span {
     display: inline-block;
     margin: 0 4px;
-    padding: 6px 12px;
+    padding: 7px 14px;
     border: 1px solid rgba(78, 186, 255, 0.26);
     border-radius: 14px;
     color: #a9dafa;
     background: rgba(0, 72, 158, 0.15);
-    font-size: 11px;
+    font-size: 14px;
+    font-weight: bold;
     letter-spacing: 1px;
 }
 
 .brand-footer {
     display: inline-block;
-    margin-top: 14px;
-    padding: 9px 18px;
+    margin-top: 10px;
+    padding: 11px 24px;
     border: 1px solid rgba(74, 198, 255, 0.48);
     border-radius: 24px;
     color: #d9f4ff;
     background: linear-gradient(90deg, rgba(2, 25, 66, 0.88), rgba(0, 77, 168, 0.62), rgba(2, 25, 66, 0.88));
     box-shadow: 0 0 22px rgba(0, 132, 255, 0.28), inset 0 0 16px rgba(82, 208, 255, 0.06);
-    font-size: 13px;
+    font-size: 18px;
     direction: rtl;
 }
 
@@ -267,16 +269,16 @@ body:after {
     padding-right: 13px;
     border-right: 1px solid rgba(107, 213, 255, 0.36);
     color: #ffffff;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
     direction: rtl;
 }
 
 .brand-footer .phone {
     display: inline-block;
-    margin: 0 14px;
+    margin: 0 18px;
     color: #55caff;
-    font-size: 16px;
+    font-size: 24px;
     font-weight: bold;
     letter-spacing: 1px;
     direction: ltr;
@@ -293,9 +295,9 @@ body:after {
 
 .cache-controller-logo {
     display: block;
-    width: 245px;
+    width: 320px;
     height: auto;
-    margin: -27px auto -20px;
+    margin: -35px auto -30px;
     -webkit-filter: drop-shadow(0 0 13px rgba(0, 162, 255, 0.8));
     filter: drop-shadow(0 0 13px rgba(0, 162, 255, 0.8));
 }
@@ -303,39 +305,39 @@ body:after {
 .cache-title {
     margin: 0;
     color: #ffffff;
-    font-size: 42px;
+    font-size: 58px;
     text-shadow: 0 0 19px rgba(60, 191, 255, 0.66);
 }
 
 .cache-subtitle {
     margin: 7px 0 0;
     color: #87cfff;
-    font-size: 12px;
+    font-size: 17px;
     font-weight: bold;
     letter-spacing: 4px;
 }
 
 .cache-panel {
     max-width: 850px;
-    margin-top: 24px;
+    margin-top: 18px;
 }
 
 @media (max-width: 760px), (max-height: 650px) {
     body { overflow: auto; }
     .site-shell { padding: 14px 18px; }
-    .brand-lockup { min-height: 192px; }
-    .logo-wrap { width: 285px; min-width: 285px; margin-right: 18px; }
+    .brand-lockup { min-height: 210px; }
+    .logo-wrap { width: 325px; min-width: 325px; margin-right: 20px; }
     .logo-wrap:before { width: 190px; height: 190px; }
-    .brand-name { font-size: 46px; }
-    .brand-subtitle { font-size: 14px; }
-    .brand-promo { margin-top: 10px; font-size: 12px; }
+    .brand-name { font-size: 56px; }
+    .brand-subtitle { font-size: 18px; }
+    .brand-promo { margin-top: 10px; font-size: 16px; }
     .status-panel { min-height: 140px; padding: 18px 22px; }
-    #msgs { font-size: 22px; }
+    #msgs { font-size: 28px; }
     .cache-brand { margin-top: 12px; }
-    .cache-controller-logo { width: 190px; margin-top: -24px; margin-bottom: -20px; }
-    .cache-title { font-size: 32px; }
+    .cache-controller-logo { width: 225px; margin-top: -24px; margin-bottom: -24px; }
+    .cache-title { font-size: 42px; }
     .brand-footer { padding: 7px 13px; }
-    .brand-footer .promo { font-size: 11px; }
-    .brand-footer .phone { margin: 0 9px; font-size: 13px; }
-    .brand-footer .owner { font-size: 13px; }
+    .brand-footer .promo { font-size: 14px; }
+    .brand-footer .phone { margin: 0 10px; font-size: 18px; }
+    .brand-footer .owner { font-size: 16px; }
 }
