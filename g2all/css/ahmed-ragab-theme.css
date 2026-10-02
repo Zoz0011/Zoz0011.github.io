@@ -147,14 +147,14 @@ body:after {
 
 .poster-services-primary {
     color: #ffffff;
-    font-size: 18px;
+    font-size: 21px;
     font-weight: bold;
 }
 
 .poster-services-secondary {
     margin-top: 3px !important;
     color: #c6ecff;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: bold;
 }
 
@@ -171,7 +171,7 @@ body:after {
     border-radius: 13px;
     color: #63d2ff;
     background: rgba(0, 19, 54, 0.68);
-    font-size: 17px;
+    font-size: 20px;
     font-weight: bold;
     letter-spacing: 1px;
 }
@@ -205,7 +205,7 @@ body:after {
 .brand-subtitle {
     margin: 12px 0 0;
     color: #b8dcf7;
-    font-size: 26px;
+    font-size: 28px;
     font-weight: bold;
     letter-spacing: 1px;
 }
@@ -219,7 +219,7 @@ body:after {
     color: #ddf6ff;
     background: rgba(0, 81, 174, 0.28);
     box-shadow: 0 0 18px rgba(0, 137, 255, 0.18), inset 0 0 12px rgba(85, 209, 255, 0.08);
-    font-size: 23px;
+    font-size: 25px;
     font-weight: bold;
 }
 
@@ -238,7 +238,7 @@ body:after {
 .status-label {
     margin: 0 0 11px;
     color: #58c2ff;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     letter-spacing: 4px;
     text-transform: uppercase;
@@ -300,7 +300,7 @@ body:after {
 
 .brand-footer {
     display: inline-block;
-    margin-top: 8px;
+    margin-top: 6px;
     padding: 10px 18px;
     border: 1px solid rgba(74, 198, 255, 0.48);
     border-radius: 24px;
@@ -313,6 +313,7 @@ body:after {
 
 .brand-footer .promo {
     color: #c9ebff;
+    font-size: 18px;
     font-weight: bold;
 }
 
@@ -321,7 +322,7 @@ body:after {
     padding-right: 13px;
     border-right: 1px solid rgba(107, 213, 255, 0.36);
     color: #ffffff;
-    font-size: 20px;
+    font-size: 21px;
     font-weight: bold;
     direction: rtl;
 }
@@ -330,7 +331,7 @@ body:after {
     display: inline-block;
     margin: 0 8px;
     color: #55caff;
-    font-size: 21px;
+    font-size: 23px;
     font-weight: bold;
     letter-spacing: 1px;
     direction: ltr;
@@ -366,7 +367,7 @@ body:after {
 .cache-subtitle {
     margin: 7px 0 0;
     color: #87cfff;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     letter-spacing: 1px;
     direction: rtl;
