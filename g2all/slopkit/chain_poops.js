@@ -47,9 +47,15 @@ function hostOk() {
 
 function hostFail() {
     var m = document.getElementById("msgs");
+    if (!committed && !rebootRequired && window.GoodGameHost
+        && GoodGameHost.safeReload("slop-poops-precommit", "pre-commit", 3, 1200)) {
+        return;
+    }
     if (m) {
-        m.innerHTML = "Failed to Load! Restart Your Console ...";
-        m.style.color = "yellow";
+        m.innerHTML = rebootRequired
+            ? "Kernel stage was interrupted. Restart the console before trying again."
+            : "Safe retry stopped. Close and reopen the browser — no console restart.";
+        m.style.color = "#ffd45a";
     }
 }
 

@@ -26,6 +26,8 @@ let passCount = 0,
   failCount = 0;
 let armedEver = false;
 let alreadyLoaded = false;
+let safeRetryPending = false;
+let kernelMutationStarted = false;
 const params = new URLSearchParams(location.search);
 const STOP_BEFORE_DOUBLE = params.get("stop") === "beforedouble";
 
@@ -39,8 +41,10 @@ function hostOk() {
 function hostFail() {
   var m = document.getElementById("msgs");
   if (m) {
-    m.innerHTML = "Failed to Load! Restart Your Console ...";
-    m.style.color = "yellow";
+    m.innerHTML = kernelMutationStarted
+      ? "Kernel stage was interrupted. Restart the console before trying again."
+      : "Safe retry stopped. Close and reopen the browser — no console restart.";
+    m.style.color = "#ffd45a";
   }
 }
 
@@ -90,6 +94,12 @@ function terse(s) {
 const SHOW_LOG = params.get("log") === "1";
 if (SHOW_LOG && document.body) document.body.className = "log";
 function finishUI(ok) {
+  if (!ok && safeRetryPending) {
+    if (window.GoodGameHost) {
+      GoodGameHost.status("Safe retry in progress... Please wait", "#67d8ff");
+    }
+    return;
+  }
   if (ok) hostOk();
   else hostFail();
   if (SHOW_LOG || !document.body) return;
@@ -291,7 +301,7 @@ let allDone = false,
     // cannot be caught here and still needs a reboot -- this only recovers
     // the benign, detectable misses.
     const retryArg = parseInt(params.get("retry") || "", 10);
-    const RETRY_MAX = Number.isFinite(retryArg) && retryArg >= 0 ? retryArg : 4;
+    const RETRY_MAX = Number.isFinite(retryArg) && retryArg >= 0 ? retryArg : 6;
     const RETRY_KEY = "jb1352-read-retry";
     const retryCount = () => {
       try {
@@ -330,6 +340,7 @@ let allDone = false,
         return false;
       }
       mark("AUTO-RELOAD", "why=" + why + " reload=" + (n + 1) + "/" + RETRY_MAX);
+      safeRetryPending = true;
       setTimeout(() => {
         try {
           location.reload();
@@ -345,7 +356,7 @@ let allDone = false,
 
     const PRIMITIVE_LOUD = /FAIL|ERROR|THREW|RETRY|ABORT|PASS/i;
     const carrier = await establishPrimitive({
-      maxAttempts: 6,
+      maxAttempts: 8,
       onEvent: (t, d, a) =>
         (PRIMITIVE_LOUD.test(t) ? mark : trace)(
           t,
@@ -1946,6 +1957,7 @@ let allDone = false,
     // kernel, so from here a failure must NOT auto-reload. Reset the counter
     // so the next manual run starts fresh.
     clearRetry();
+    kernelMutationStarted = true;
 
     const IDT = new int64(0x00001a00, 0xffffff80);
     const GATE_SZ = 16;

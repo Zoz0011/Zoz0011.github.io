@@ -42,9 +42,15 @@ function hostOk() {
 
 function hostFail() {
     var m = document.getElementById("msgs");
+    if (!committed && !rebootRequired && window.GoodGameHost
+        && GoodGameHost.safeReload("slop-lapse-precommit", "pre-commit", 3, 1200)) {
+        return;
+    }
     if (m) {
-        m.innerHTML = "Failed to Load! Restart Your Console ...";
-        m.style.color = "yellow";
+        m.innerHTML = rebootRequired
+            ? "Kernel stage was interrupted. Restart the console before trying again."
+            : "Safe retry stopped. Close and reopen the browser — no console restart.";
+        m.style.color = "#ffd45a";
     }
 }
 
@@ -3843,6 +3849,12 @@ function makeRpc(worker) {
         } else if (repaired && cleanupDone) {
 			if (payloadRunning) {
                 hostOk();
+            } else {
+                var hostMessage = document.getElementById("msgs");
+                if (hostMessage) {
+                    hostMessage.innerHTML = "Kernel cleanup completed. Reopen the browser — console restart is not required.";
+                    hostMessage.style.color = "#ffd45a";
+                }
             }
             mark("SAFE-TO-EXIT", "chunkX=freed-once-by-fd" + pktoptsTwins[0]
                 + " chunkY=leaked-0x80 pipes=+1ref-each"
