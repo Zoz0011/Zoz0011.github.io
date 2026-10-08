@@ -3,8 +3,6 @@
 
   var PREFIX = "good-game-safe-retry:";
   var GOLDHEN_VERSION = "2.4b18.12";
-  var AUTO_EXIT_DELAY = 5000;
-  var autoExitScheduled = false;
 
   function getNode(id) {
     return document.getElementById(id);
@@ -52,6 +50,7 @@
     };
 
     state = state || "loading";
+    if (document.documentElement) document.documentElement.setAttribute("data-runtime-state", state);
     if (panel) panel.setAttribute("data-state", state);
     if (chip) chip.innerHTML = labels[state] || labels.loading;
     if (detailNode && detail) detailNode.innerHTML = detail;
@@ -61,50 +60,6 @@
       bar.parentNode.setAttribute("aria-valuenow", String(progress));
     }
     if (message) message.style.color = colors[state] || colors.loading;
-  }
-
-  function isPS4Browser() {
-    return /PlayStation 4/i.test(navigator.userAgent || "");
-  }
-
-  function closePS4Browser() {
-    try {
-      global.open("", "_self");
-    } catch (error) {}
-
-    try {
-      global.close();
-    } catch (error) {}
-
-    setTimeout(function () {
-      if (!document.hidden) {
-        setState(
-          "success",
-          100,
-          "تم تحميل GoldHEN. إذا ظل المتصفح مفتوحًا، اضغط زر PS للعودة للواجهة."
-        );
-      }
-    }, 700);
-  }
-
-  function scheduleAutoExit() {
-    var seconds = Math.ceil(AUTO_EXIT_DELAY / 1000);
-
-    if (autoExitScheduled || !isPS4Browser()) return;
-    autoExitScheduled = true;
-
-    function updateCountdown() {
-      setState(
-        "success",
-        100,
-        "تم تحميل GoldHEN بنجاح؛ سيتم إغلاق المتصفح خلال " + seconds + " ثوانٍ."
-      );
-      seconds--;
-      if (seconds > 0) setTimeout(updateCountdown, 1000);
-    }
-
-    updateCountdown();
-    setTimeout(closePS4Browser, AUTO_EXIT_DELAY);
   }
 
   function syncStatus(message) {
@@ -117,13 +72,11 @@
     if (retryMatch) setAttempt(parseInt(retryMatch[1], 10), parseInt(retryMatch[2], 10));
 
     if (/already loaded|loaded|successfully|بنجاح|جاهز للعمل بدون إنترنت/.test(text)) {
-      var goldhenReady = /goldhen/.test(text) && /already loaded|loaded|successfully|بنجاح/.test(text);
       setAttempt(0, 0);
       setSafeRetry(false);
       setState("success", 100, /cache|كاش/.test(text)
         ? "الموقع جاهز للعمل بدون إنترنت؛ أغلق المتصفح وافتحه مرة أخرى."
-        : "تم تحميل GoldHEN بنجاح والجهاز جاهز للاستخدام.");
-      if (goldhenReady) scheduleAutoExit();
+        : "تم تحميل GoldHEN بنجاح؛ اضغط زر PS للعودة إلى واجهة الجهاز.");
     } else if (dangerousFailure) {
       setAttempt(0, 0);
       setSafeRetry(false);
@@ -142,7 +95,7 @@
       setState("loading", 78, "جاري تحميل ملف GoldHEN والتحقق من جاهزيته.");
     } else if (/kernel|exploit|webkit|jailbreak/.test(text)) {
       setSafeRetry(false);
-      setState("loading", 52, "جاري تجهيز مرحلة التشغيل؛ برجاء الانتظار وعدم إغلاق الصفحة.");
+      setState("loading", 52, "جاري تجهيز مرحلة التشغيل؛ قد تثبت الصورة لثوانٍ وهذا طبيعي، لا تغلق الصفحة.");
     } else if (/unsupported|only for ps4|not found/.test(text)) {
       setAttempt(0, 0);
       setSafeRetry(false);
@@ -364,14 +317,12 @@
     cacheError: cacheError,
     cacheProgress: cacheProgress,
     cacheReady: cacheReady,
-    closePS4Browser: closePS4Browser,
     clearRetry: clearRetry,
     loadBinary: loadBinary,
     safeReload: safeReload,
     setAttempt: setAttempt,
     setSafeRetry: setSafeRetry,
     setState: setState,
-    scheduleAutoExit: scheduleAutoExit,
     status: status,
     syncStatus: syncStatus
   };
