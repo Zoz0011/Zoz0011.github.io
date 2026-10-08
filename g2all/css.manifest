@@ -1,9 +1,10 @@
 CACHE MANIFEST
-# GOOD GAME interface, safe retry and auto exit v11
+# GOOD GAME lightweight interface v12
 
 CACHE:
-css/ahmed-ragab-theme.css?v=10
-assets/good-game-services-poster-v6.png
+css/ahmed-ragab-theme.css?v=12
+assets/good-game-services-poster-v7.png
+assets/ahmed-ragab-bg-v4.jpg
 goldhen_2.4b18.12.bin
 index.html
 host-runtime.js
