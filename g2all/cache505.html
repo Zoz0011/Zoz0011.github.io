@@ -4,22 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GOOD GAME | أحمد رجب | تثبيت كاش GoldHEN</title>
-<link rel="stylesheet" href="css/ahmed-ragab-theme.css?v=8">
+<link rel="stylesheet" href="css/ahmed-ragab-theme.css?v=10">
+<script src="host-runtime.js"></script>
 </head>
 <body>
 <script>
 history.replaceState(null,null,'index.html');var histlength=history.length;history.go(-histlength);
-function DLProgress(e){Percent=(Math.round(e.loaded / e.total * 100));window.msgs.innerHTML="Installing Offline Cache: " + Percent + "%";}
-function DisplayCacheProgress(){window.msgs.innerHTML="Cache Installed Successfully ✔";setTimeout(function(){window.msgs.innerHTML="Now Close And Re-Open Your Browser ...";},1500);}
+function DLProgress(e){var Percent=e&&e.total?Math.round(e.loaded/e.total*100):0;GoodGameHost.cacheProgress(Percent);}
+function DisplayCacheProgress(){GoodGameHost.cacheReady();}
 window.applicationCache.addEventListener("progress",DLProgress,false);
 window.applicationCache.oncached=function(e){DisplayCacheProgress();};
 window.applicationCache.onupdateready=function(e){DisplayCacheProgress();};
-window.applicationCache.onerror=function(e){window.msgs.innerHTML="Error Installing Cache! - Clear and Re-Open Your Browser ...";};
+window.applicationCache.onerror=function(e){GoodGameHost.cacheError();};
 </script>
 <div class="site-shell cache-shell">
 <div class="topline"></div>
 <header class="cache-brand"><img class="cache-controller-logo" src="assets/good-game-services-poster-v6.png" alt="بوستر GOOD GAME للخدمات"><h1 class="cache-title">GOOD GAME</h1><p class="cache-subtitle">صيانة البلايستيشن والدراعات • بيع • شراء • استبدال • خدمة ما بعد البيع</p></header>
-<main class="status-panel cache-panel"><p class="status-label">CACHE INSTALLATION</p><h2 id="msgs">Starting Cache Installation...</h2><div class="pulse-line"></div><div class="system-badges"><span>PS4</span><span>FW 5.05 / 5.07</span><span>GOLDHEN</span></div></main>
+<main class="status-panel cache-panel" id="status-panel" data-state="cache"><div class="status-heading"><p class="status-label">OFFLINE CACHE</p><span class="status-chip" id="status-chip">تجهيز الكاش</span></div><h2 id="msgs" dir="auto">جاري بدء تثبيت الكاش...</h2><p class="status-detail" id="status-detail" dir="rtl">يتم تجهيز ملفات الموقع للعمل بدون إنترنت.</p><div class="progress-track" role="progressbar" aria-label="تقدم تثبيت الكاش" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="status-progress" id="status-progress" style="width:0%"></span></div><div class="status-actions"><span class="attempt-badge" id="attempt-badge" hidden>المحاولة 1 من 3</span><button class="safe-retry-button" id="safe-retry-button" type="button" hidden>إعادة تثبيت الكاش</button></div><div class="system-badges"><span>PS4</span><span id="firmware-badge">FW 5.05 / 5.07</span><span id="goldhen-badge">GOLDHEN 2.4b18.12</span><span>HOST v10</span></div></main>
 <footer class="brand-footer"><span class="promo">صيانة • بيع • شراء • استبدال • خدمة ما بعد البيع</span><span class="phone">+20 122 288 2423</span><span class="phone">+20 155 158 8453</span><span class="owner">أحمد رجب</span></footer>
 </div>
 </body>
