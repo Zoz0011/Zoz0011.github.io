@@ -1688,6 +1688,8 @@ function setup(block_fd) {
 // * corrupt a pipe for arbitrary r/w
 //
 // the exploit implementation also assumes that we are pinned to one core
+let kernelState = "pristine";
+
 export async function kexploit() {
   const _init_t1 = performance.now();
   await init();
@@ -1740,6 +1742,7 @@ export async function kexploit() {
     [block_id, groom_ids] = setup(block_fd);
 
     log("\nSTAGE: Double free AIO queue entry");
+    kernelState = "mutating";
     const sd_pair = double_free_reqs2(sds);
 
     log("\nSTAGE: Leak kernel addresses");
@@ -1753,6 +1756,7 @@ export async function kexploit() {
 
     log("\nSTAGE: Patch kernel");
     await patch_kernel(kbase, kmem, p_ucred, restore_info);
+    kernelState = "patched";
 
   } finally {
     close(unblock_fd);
@@ -1806,69 +1810,67 @@ function array_from_address(addr, size) {
   return og_array;
 }
 
-function runPayload(path) {
-  // Why xhr instead of fetch? More universal support, more control, better errors, etc.
+async function runPayload(path) {
   log(`loading ${path}`);
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", path);
-  xhr.responseType = "arraybuffer";
-  xhr.onreadystatechange = function () {
-    // When request is "DONE"
-    if (xhr.readyState === 4) {
-      // If response code is "OK"
-      if (xhr.status === 200) {
-        try {
-          // Allocate a buffer with length rounded up to the next multiple of 4 bytes for Uint32 alignment
-          const padding_length = (4 - (xhr.response.byteLength % 4)) % 4;
-          const padded_buffer = new Uint8Array(xhr.response.byteLength + padding_length);
+  const response = window.GoodGameHost
+    ? await GoodGameHost.loadBinary(path, {
+        attempts: 5,
+        timeout: 12000,
+        expectedBytes: 293120,
+        retryDelay: 400,
+      })
+    : await (await fetch(path)).arrayBuffer();
 
-          // Load xhr response data into the payload buffer and pad the rest with zeros
-          padded_buffer.set(new Uint8Array(xhr.response), 0);
-          if (padding_length) {
-            padded_buffer.set(new Uint8Array(padding_length), xhr.response.byteLength);
-          }
-
-          // Convert padded_buffer to Uint32Array. That's what `array_from_address()` expects
-          const shellcode = new Uint32Array(padded_buffer.buffer);
-
-          // Map memory with RWX permissions to load the payload into
-          const payload_buffer = chain.sysp("mmap", 0, padded_buffer.length, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_ANON | MAP_PREFAULT_READ, -1, 0);
-          log(`payload buffer allocated at ${payload_buffer}`);
-
-          // Create an JS array that "shadows" the mapped location
-          const payload_buffer_shadow = array_from_address(payload_buffer, shellcode.length);
-
-          // Move the shellcode to the array created in the previous step
-          payload_buffer_shadow.set(shellcode);
-          log(`loaded ${xhr.response.byteLength} bytes for payload (+ ${padding_length} bytes padding)`);
-
-          // Call the payload
-          chain.call_void(payload_buffer);
-
-          // Unmap the memory used for the payload
-          sysi("munmap", payload_buffer, padded_buffer.length);
-        } catch (e) {
-          // Caught error while trying to execute payload
-          log(`error in runPayload: ${e.message}`);
-        }
-      } else {
-        // Some other HTTP response code (eg. 404)
-        log(`error retrieving payload, ${xhr.status}`);
-      }
-    }
-  };
-  xhr.onerror = function () {
-    log("network error");
-  };
-  xhr.send();
+  const padding_length = (4 - (response.byteLength % 4)) % 4;
+  const padded_buffer = new Uint8Array(response.byteLength + padding_length);
+  padded_buffer.set(new Uint8Array(response), 0);
+  const shellcode = new Uint32Array(padded_buffer.buffer);
+  const payload_buffer = chain.sysp(
+    "mmap",
+    0,
+    padded_buffer.length,
+    PROT_READ | PROT_WRITE | PROT_EXEC,
+    MAP_ANON | MAP_PREFAULT_READ,
+    -1,
+    0,
+  );
+  log(`payload buffer allocated at ${payload_buffer}`);
+  const payload_buffer_shadow = array_from_address(payload_buffer, shellcode.length);
+  payload_buffer_shadow.set(shellcode);
+  log(`loaded ${response.byteLength} bytes for payload (+ ${padding_length} bytes padding)`);
+  chain.call_void(payload_buffer);
+  sysi("munmap", payload_buffer, padded_buffer.length);
 }
 
-kexploit().then(() => {
-	setTimeout(() => {
-		runPayload("./goldhen_2.4b18.12.bin");
-		msgs.innerHTML = "GoldHEN v2.4b18.12 Loaded ...";
-	},500);
-}).catch(() => {
-    msgs.innerHTML = "Failed to Load! Restart Your Console ...";
-    msgs.style.color = "yellow";
-});
+async function launchGoldHEN() {
+  try {
+    await kexploit();
+    if (window.GoodGameHost) GoodGameHost.clearRetry("fw700-kernel-prep");
+  } catch (error) {
+    log(`kernel exploit failed in state ${kernelState}: ${error}`);
+    if (
+      kernelState === "pristine" &&
+      window.GoodGameHost &&
+      GoodGameHost.safeReload("fw700-kernel-prep", "kernel-prep", 2, 1200)
+    ) {
+      return;
+    }
+    msgs.innerHTML = kernelState === "pristine"
+      ? "Safe retry stopped. Close and reopen the browser — no console restart."
+      : "Kernel stage was interrupted. Restart the console before trying again.";
+    msgs.style.color = "#ffd45a";
+    return;
+  }
+
+  try {
+    msgs.innerHTML = "Loading GoldHEN payload...";
+    await runPayload("./goldhen_2.4b18.12.bin");
+    msgs.innerHTML = "GoldHEN v2.4b18.12 Loaded ...";
+  } catch (error) {
+    log(`payload failed after retries: ${error}`);
+    msgs.innerHTML = "GoldHEN file could not be loaded. Reopen the browser — console restart is not required.";
+    msgs.style.color = "#ffd45a";
+  }
+}
+
+launchGoldHEN();
