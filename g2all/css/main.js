@@ -8,6 +8,22 @@ function load_script(src, remote = true, transfer = []) {
   });
 }
 
+var kernelState = "pristine";
+
+async function loadHostBinary(path, expectedBytes) {
+  if (window.GoodGameHost) {
+    return GoodGameHost.loadBinary(path, {
+      attempts: 5,
+      timeout: 12000,
+      expectedBytes: expectedBytes || 0,
+      retryDelay: 400,
+    });
+  }
+  const response = await fetch(path);
+  if (!response.ok) throw new Error("HTTP " + response.status + " for " + path);
+  return response.arrayBuffer();
+}
+
 async function doJb() {
   await load_script("css/misc.js");
 
@@ -65,6 +81,7 @@ async function doJb() {
       if (exploitChain == "lapse") {
         init();
         await setup();
+        kernelState = "mutating";
         await double_free_reqs2();
         leak_kaddrs();
         double_free_reqs1();
@@ -79,6 +96,7 @@ async function doJb() {
       } else {
         init();
         await setup();
+        kernelState = "mutating";
         await ucred_triple_free();
         leak_kqueue();
         await make_karw();
@@ -100,21 +118,38 @@ async function doJb() {
     if (fn.setuid.invoke(0) === -1) {
       jailbreak();
 
-      const kpatches_rsp = await fetch("css/ps4/patches/" + constants.KPATCH);
-      const kpatches_buf = await kpatches_rsp.arrayBuffer();
+      const kpatches_buf = await loadHostBinary(
+        "css/ps4/patches/" + constants.KPATCH,
+        0,
+      );
       const kpatches_u8 = new Uint8Array(kpatches_buf);
       kernel_patches(kpatches_u8);
+      kernelState = "patched";
 
-      const bin_rsp = await fetch("goldhen_2.4b18.12.bin");
-      const bin_buf = await bin_rsp.arrayBuffer();
+      const bin_buf = await loadHostBinary("goldhen_2.4b18.12.bin", 293120);
       const bin_u8 = new Uint8Array(bin_buf);
       load_bin(bin_u8);
     }
 
+    if (window.GoodGameHost) GoodGameHost.clearRetry("fw10-kernel-prep");
     msgs.innerHTML = "GoldHEN v2.4b18.12 Loaded ...";
     logger.info("===END===");
   } catch (e) {
-    msgs.innerHTML = "Failed to Load! Restart Your Console ...";
-    msgs.style.color = "yellow";
+    logger.info("GoldHEN host failure in " + kernelState + ": " + e);
+    if (
+      kernelState === "pristine" &&
+      window.GoodGameHost &&
+      GoodGameHost.safeReload("fw10-kernel-prep", "kernel-prep", 2, 1200)
+    ) {
+      return;
+    }
+    if (kernelState === "patched") {
+      msgs.innerHTML = "GoldHEN file could not be loaded. Reopen the browser — console restart is not required.";
+    } else if (kernelState === "pristine") {
+      msgs.innerHTML = "Safe retry stopped. Close and reopen the browser — no console restart.";
+    } else {
+      msgs.innerHTML = "Kernel stage was interrupted. Restart the console before trying again.";
+    }
+    msgs.style.color = "#ffd45a";
   }
 }
