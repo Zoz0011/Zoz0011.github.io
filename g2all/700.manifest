@@ -1,11 +1,12 @@
 CACHE MANIFEST 
-# GOOD GAME services poster v8 - international support numbers
+# GOOD GAME GoldHEN safe retry v9
 
 CACHE: 
 css/ahmed-ragab-theme.css?v=8
 assets/good-game-services-poster-v6.png
 goldhen_2.4b18.12.bin
 index.html
+host-runtime.js
 700\alert.js
 700\config.js
 700\lapse.js

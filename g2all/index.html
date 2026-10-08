@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GOOD GAME | أحمد رجب | PS4 GoldHEN Host</title>
 <link rel="stylesheet" href="css/ahmed-ragab-theme.css?v=8">
+<script src="host-runtime.js"></script>
 </head>
 <body>
 <script>
@@ -15,7 +16,11 @@ var fwVersion = isPS4 ? match[1] : "Unknown";
 var fwNum = parseFloat(fwVersion);
 
 function onScriptError() {
-    msgs.innerHTML = "Content not Found! - Clear Browser Data and Re-Install Cache ...";
+    if (window.GoodGameHost && GoodGameHost.safeReload("script-" + fwVersion, "script-load", 2, 1000)) {
+        return;
+    }
+    msgs.innerHTML = "Content not found. Re-install the cache — console restart is not required.";
+    msgs.style.color = "#ffd45a";
 }
 
 if (!isPS4) {
