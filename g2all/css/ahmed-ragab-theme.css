@@ -93,14 +93,14 @@ body:after {
     -webkit-box-pack: center;
     -webkit-justify-content: center;
     justify-content: center;
-    min-height: 300px;
+    min-height: 265px;
 }
 
 .logo-wrap {
     position: relative;
-    width: 525px;
-    min-width: 525px;
-    margin-right: 22px;
+    width: 465px;
+    min-width: 465px;
+    margin-right: 30px;
 }
 
 .logo-wrap:before {
@@ -147,14 +147,14 @@ body:after {
 
 .poster-services-primary {
     color: #ffffff;
-    font-size: 21px;
+    font-size: 19px;
     font-weight: bold;
 }
 
 .poster-services-secondary {
     margin-top: 3px !important;
     color: #c6ecff;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
 }
 
@@ -171,7 +171,7 @@ body:after {
     border-radius: 13px;
     color: #63d2ff;
     background: rgba(0, 19, 54, 0.68);
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     letter-spacing: 1px;
 }
@@ -194,7 +194,7 @@ body:after {
 .brand-name {
     margin: 0;
     color: #ffffff;
-    font-size: 94px;
+    font-size: 82px;
     font-weight: 800;
     letter-spacing: 3px;
     line-height: 1.05;
@@ -205,7 +205,7 @@ body:after {
 .brand-subtitle {
     margin: 12px 0 0;
     color: #b8dcf7;
-    font-size: 28px;
+    font-size: 25px;
     font-weight: bold;
     letter-spacing: 1px;
 }
@@ -219,24 +219,55 @@ body:after {
     color: #ddf6ff;
     background: rgba(0, 81, 174, 0.28);
     box-shadow: 0 0 18px rgba(0, 137, 255, 0.18), inset 0 0 12px rgba(85, 209, 255, 0.08);
-    font-size: 25px;
+    font-size: 22px;
     font-weight: bold;
 }
 
 .status-panel {
     box-sizing: border-box;
     max-width: 1200px;
-    min-height: 190px;
-    margin: 3px auto 0;
-    padding: 18px 30px 17px;
-    border: 1px solid rgba(80, 192, 255, 0.36);
-    border-radius: 18px;
+    min-height: 255px;
+    margin: 12px auto 0;
+    padding: 22px 34px 20px;
+    border: 2px solid rgba(80, 192, 255, 0.48);
+    border-radius: 22px;
     background: linear-gradient(135deg, rgba(6, 30, 70, 0.9), rgba(3, 13, 34, 0.88));
     box-shadow: 0 18px 60px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 28px rgba(0, 111, 255, 0.1);
 }
 
+.status-panel[data-state="retry"] {
+    border-color: rgba(97, 221, 255, 0.82);
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 34px rgba(0, 183, 255, 0.24);
+}
+
+.status-panel[data-state="success"] {
+    border-color: rgba(78, 245, 158, 0.72);
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 34px rgba(32, 223, 137, 0.2);
+}
+
+.status-panel[data-state="warning"] {
+    border-color: rgba(255, 204, 74, 0.75);
+}
+
+.status-panel[data-state="error"] {
+    border-color: rgba(255, 87, 116, 0.78);
+}
+
+.status-heading {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    margin-bottom: 9px;
+}
+
 .status-label {
-    margin: 0 0 11px;
+    margin: 0;
     color: #58c2ff;
     font-size: 18px;
     font-weight: bold;
@@ -244,14 +275,112 @@ body:after {
     text-transform: uppercase;
 }
 
+.status-chip {
+    display: inline-block;
+    margin-left: 18px;
+    padding: 6px 14px;
+    border: 1px solid rgba(102, 215, 255, 0.48);
+    border-radius: 15px;
+    color: #d9f6ff;
+    background: rgba(0, 107, 206, 0.22);
+    font-size: 16px;
+    font-weight: bold;
+    direction: rtl;
+}
+
+[data-state="success"] .status-chip { color: #8affbd; border-color: rgba(91, 255, 172, 0.46); background: rgba(24, 148, 92, 0.22); }
+[data-state="warning"] .status-chip { color: #ffe27d; border-color: rgba(255, 212, 90, 0.5); background: rgba(151, 103, 0, 0.22); }
+[data-state="error"] .status-chip { color: #ff9dac; border-color: rgba(255, 101, 128, 0.5); background: rgba(151, 23, 48, 0.22); }
+
 #msgs {
-    min-height: 54px;
+    min-height: 58px;
     margin: 0;
     color: #ffffff;
-    font-size: 40px;
-    font-weight: 600;
+    font-size: 44px;
+    font-weight: 700;
     line-height: 1.35;
     text-shadow: 0 0 18px rgba(68, 182, 255, 0.46);
+}
+
+.status-detail {
+    min-height: 29px;
+    margin: 5px 0 10px;
+    color: #bde8ff;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+.progress-track {
+    position: relative;
+    box-sizing: border-box;
+    width: 88%;
+    height: 13px;
+    margin: 10px auto 12px;
+    overflow: hidden;
+    border: 1px solid rgba(95, 203, 255, 0.35);
+    border-radius: 9px;
+    background: rgba(0, 10, 31, 0.82);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.48);
+}
+
+.status-progress {
+    display: block;
+    width: 18%;
+    height: 100%;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #006dff, #56d8ff, #ffffff);
+    box-shadow: 0 0 18px #008cff;
+    -webkit-transition: width 0.35s ease;
+    transition: width 0.35s ease;
+}
+
+[data-state="success"] .status-progress { background: linear-gradient(90deg, #00a95a, #4ef59e, #d9ffeb); box-shadow: 0 0 18px #31e68e; }
+[data-state="warning"] .status-progress { background: linear-gradient(90deg, #d38b00, #ffd45a, #fff1ad); box-shadow: 0 0 18px #ffbc2e; }
+[data-state="error"] .status-progress { background: linear-gradient(90deg, #a90f37, #ff5774, #ffc2cc); box-shadow: 0 0 18px #ff4165; }
+
+.status-actions {
+    min-height: 38px;
+    margin: 4px 0 10px;
+}
+
+.attempt-badge,
+.safe-retry-button {
+    display: inline-block;
+    box-sizing: border-box;
+    min-height: 36px;
+    margin: 0 5px;
+    padding: 7px 17px;
+    border-radius: 18px;
+    font-family: Arial, Tahoma, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    direction: rtl;
+}
+
+.attempt-badge {
+    border: 1px solid rgba(101, 220, 255, 0.5);
+    color: #89e4ff;
+    background: rgba(0, 100, 190, 0.25);
+}
+
+.safe-retry-button {
+    border: 1px solid rgba(120, 225, 255, 0.86);
+    color: #ffffff;
+    background: linear-gradient(180deg, rgba(0, 143, 241, 0.96), rgba(0, 77, 174, 0.96));
+    box-shadow: 0 0 18px rgba(0, 162, 255, 0.46);
+    cursor: pointer;
+}
+
+.safe-retry-button:focus,
+.safe-retry-button:hover {
+    outline: none;
+    border-color: #ffffff;
+    box-shadow: 0 0 24px rgba(89, 215, 255, 0.8);
+}
+
+[hidden] {
+    display: none !important;
 }
 
 .pulse-line {
@@ -288,12 +417,12 @@ body:after {
 .system-badges span {
     display: inline-block;
     margin: 0 4px;
-    padding: 8px 16px;
+    padding: 9px 17px;
     border: 1px solid rgba(78, 186, 255, 0.26);
     border-radius: 14px;
     color: #a9dafa;
     background: rgba(0, 72, 158, 0.15);
-    font-size: 16px;
+    font-size: 17px;
     font-weight: bold;
     letter-spacing: 1px;
 }
@@ -382,18 +511,24 @@ body:after {
 @media (max-width: 760px), (max-height: 650px) {
     body { overflow: auto; }
     .site-shell { padding: 14px 18px; }
-    .brand-lockup { min-height: 210px; }
-    .logo-wrap { width: 325px; min-width: 325px; margin-right: 20px; }
+    .brand-lockup { min-height: 195px; }
+    .logo-wrap { width: 300px; min-width: 300px; margin-right: 20px; }
     .logo-wrap:before { width: 190px; height: 190px; }
     .poster-ad { margin-top: -23px; padding: 6px 8px 7px; }
     .poster-services-primary { font-size: 14px; }
     .poster-services-secondary { font-size: 12px; }
     .poster-phones span { margin: 0 2px; padding: 2px 6px; font-size: 12px; }
-    .brand-name { font-size: 56px; }
+    .brand-name { font-size: 52px; }
     .brand-subtitle { font-size: 18px; }
     .brand-promo { margin-top: 10px; font-size: 16px; }
-    .status-panel { min-height: 140px; padding: 18px 22px; }
-    #msgs { font-size: 28px; }
+    .status-panel { min-height: 205px; padding: 16px 20px; }
+    #msgs { min-height: 42px; font-size: 31px; }
+    .status-detail { min-height: 24px; font-size: 17px; }
+    .progress-track { width: 92%; height: 11px; margin: 8px auto 9px; }
+    .status-actions { min-height: 32px; margin-bottom: 7px; }
+    .attempt-badge, .safe-retry-button { min-height: 31px; padding: 5px 13px; font-size: 15px; }
+    .status-chip { margin-left: 10px; padding: 4px 10px; font-size: 13px; }
+    .system-badges span { padding: 6px 10px; font-size: 13px; }
     .cache-brand { margin-top: 12px; }
     .cache-controller-logo { width: 225px; margin-top: -24px; margin-bottom: -24px; }
     .cache-title { font-size: 42px; }
